@@ -1,0 +1,25 @@
+# --- Runtime / generated ---
+/templates_c/*
+/cache/*
+/logs/*
+/configs/*
+
+!templates_c/.gitkeep
+!cache/.gitkeep
+!logs/.gitkeep
+!configs/.gitkeep
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- Editor/IDE ---
+.idea/
+.vscode/
+*.swp
+*~
+*.tmp
+
+# --- Logs anywhere ---
+*.log
