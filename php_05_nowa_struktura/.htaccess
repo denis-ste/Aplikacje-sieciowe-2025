@@ -1,0 +1,43 @@
+# === STRICT MODE: tylko jeden dostępny URL ===
+# - Dozwolone: /index.php oraz zasoby publiczne (css/js/img)
+# - ZABRONIONE: bezpośrednie wejście w ctrl.php, init.php, app/*.php, core/*.php itd.
+# Wymaga: Apache z AllowOverride All (XAMPP domyślnie często OK).
+
+Options -Indexes
+
+<IfModule mod_authz_core.c>
+  # Zablokuj bezpośrednie wejście do dowolnego .php oprócz index.php
+  <FilesMatch "^(?!index\.php$).+\.php$">
+    Require all denied
+  </FilesMatch>
+
+  # Dodatkowo zablokuj typowe pliki źródłowe/konfig
+  <FilesMatch "\.(tpl|zip|log|ini|md|txt)$">
+    Require all denied
+  </FilesMatch>
+</IfModule>
+
+# Blokada dostępu do katalogów niepublicznych (nawet jeśli ktoś zgaduje ścieżkę)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Zabroń wejścia do katalogów backendowych / roboczych
+  RewriteRule ^(app|core|lib|templates|templates_ui|templates_c|cache|configs|logs)/ - [F,L]
+
+  # Pozwól na publiczne zasoby (statyczne)
+  RewriteCond %{REQUEST_URI} ^/(css|js|img)/ [OR]
+  RewriteCond %{REQUEST_URI} ^/favicon\.ico$
+  RewriteRule ^ - [L]
+
+  # Pozwól na index.php (jeden entry point)
+  RewriteCond %{THE_REQUEST} \s/+index\.php[?\s] [NC]
+  RewriteRule ^index\.php$ - [L]
+
+  # Jeśli żądanie jest realnym plikiem lub katalogiem (np. css/ui.css), nie przepisywać
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Wszystko inne kieruj do index.php (front controller)
+  RewriteRule ^ index.php [L]
+</IfModule>

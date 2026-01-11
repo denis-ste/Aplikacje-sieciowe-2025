@@ -1,0 +1,15 @@
+# Smarty
+/templates_c/
+/cache/
+
+# Logi
+/logs/
+
+# Śmieci z edytorów/OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Archiwa w projekcie (jeśli ktoś przypadkiem wrzuci)
+*.zip
