@@ -1,0 +1,6 @@
+/* UI override – tło dowolne, bez wpływu na logikę */
+body {
+  background: radial-gradient(1200px 700px at 20% 10%, #1a3a2a 0%, rgba(26,58,42,0) 55%),
+              radial-gradient(900px 600px at 80% 20%, #1e2a44 0%, rgba(30,42,68,0) 55%),
+              linear-gradient(180deg, #0b1320 0%, #091018 100%);
+}
